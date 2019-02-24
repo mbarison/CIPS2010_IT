@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Selezione Codice CIPS2010 Demo</title>
+	<title>Selezione Codice CIP2010</title>
 	<link href="./select2.min.css" rel="stylesheet" />
 	<script src="./jquery-3.3.1.min.js" type="text/javascript"></script>
 	<script src="./select2.min.js" type="text/javascript"></script>
@@ -13,9 +13,10 @@
 		function myFunction() {
 		  var e = document.getElementById("cips_select");
           var strOption = e.options[e.selectedIndex].value;
+          var strDesc = e.options[e.selectedIndex].innerText;
 		
 		  var x = document.getElementById("myDIV");
-		  x.innerHTML = "Codice: " + strOption;
+		  x.innerHTML = "Descrizione: " + strDesc + "<br/>Codice CIP 2010: " + strOption;
 		} 
 
 		function matchCustom(params, data) {
@@ -67,12 +68,26 @@
 	
 </head>
 <body>
-	
+<center>	
+<h1>Selezione codice CIP 2010</h1>
+
+Il codice CIP 2010 è un sistema di classificazione <a href="https://nces.ed.gov/ipeds/cipcode/resources.aspx?y=55">ideato dal National Center for Education Statistics</a>.<br/>
+Il sistema comprende più di duemila programmi di istruzione superiore.<br/>
+<br/>
+Per trovare il codice di interesse:<br/>digitare almeno cinque lettere del campo di ricerca o specializzazione.
+<br/><br/>
+
+<table cellpadding=10 cellspacing=5>
+<tr bgcolor="dodgerblue"><td>
 <select id="cips_select" class="js-example-basic-single form-control" name="cips" onchange="myFunction()">
 	<option/>
 </select>
-<br/>&nbsp;<br/>
+</td></tr>
+<tr><td>
 <div id="myDIV"></div> 
-		
+</td></tr>
+</table>
+
+</center>		
 </body>
 </html>
