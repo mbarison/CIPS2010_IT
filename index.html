@@ -1,0 +1,78 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Selezione Codice CIPS2010 Demo</title>
+	<link href="./select2.min.css" rel="stylesheet" />
+	<script src="./jquery-3.3.1.min.js" type="text/javascript"></script>
+	<script src="./select2.min.js" type="text/javascript"></script>
+	<script src="i18n/it.js" type="text/javascript"></script>
+	<script src="./cips2010_data.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+
+		function myFunction() {
+		  var e = document.getElementById("cips_select");
+          var strOption = e.options[e.selectedIndex].value;
+		
+		  var x = document.getElementById("myDIV");
+		  x.innerHTML = "Codice: " + strOption;
+		} 
+
+		function matchCustom(params, data) {
+		  // If there are no search terms, return all of the data
+		  if ($.trim(params.term) === '') {
+		    return null;
+		  }
+		
+		  // Skip if there is no 'children' property
+		  if (typeof data.children === 'undefined') {
+		    return null;
+		  }
+		
+		  // `data.children` contains the actual options that we are matching against
+		  var filteredChildren = [];
+		  $.each(data.children, function (idx, child) {
+		    if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
+		      filteredChildren.push(child);
+		    }
+		  });
+		
+		  // If we matched any of the group's children, then set the matched children on the group
+		  // and return the group object
+		  if (filteredChildren.length) {
+		    var modifiedData = $.extend({}, data, true);
+		    modifiedData.children = filteredChildren;
+		
+		    // You can return modified objects from here
+		    // This includes matching the `children` how you want in nested data sets
+		    return modifiedData;
+		  }
+		
+		  // Return `null` if the term should not be displayed
+		  return null;
+		}		
+			
+		$(document).ready(function() {
+   		 $('.js-example-basic-single').select2(
+   		 	{ data: cips2010_data,
+   		 	  placeholder: "Seleziona un campo di ricerca, una specializzazione o un'occupazione",
+    		  allowClear: true,
+    		  matcher: matchCustom,
+    		  language: 'it',
+    		  minimumInputLength: 5,
+    		   maximumInputLength: 20
+   		 	});
+		});
+	</script>
+	
+</head>
+<body>
+	
+<select id="cips_select" class="js-example-basic-single form-control" name="cips" onchange="myFunction()">
+	<option/>
+</select>
+<br/>&nbsp;<br/>
+<div id="myDIV"></div> 
+		
+</body>
+</html>
